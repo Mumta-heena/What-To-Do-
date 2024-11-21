@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container text-center py-5">
+  <h1 class="display-4">Welcome to Task Manager!</h1>
+  <p class="lead">A simple tool to manage your tasks efficiently.</p>
+  <a href="{% url 'get_started' %}" class="btn btn-primary btn-lg mt-4"
+    >Get Started</a
+  >
+</div>
+{% endblock %}
