@@ -1,0 +1,70 @@
+/* Base Colors */
+:root {
+    --primary-color: #4a90e2; /* Sky Blue */
+    --secondary-color: #f8f9fa; /* White */
+    --dark-color: #1a1a40; /* Dark Blue */
+    --accent-color: #ffdd57; /* Soft Yellow */
+  }
+  
+  /* Global Styles */
+  body {
+    background-color: var(--secondary-color);
+    color: var(--dark-color);
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Navbar Styling */
+  .navbar {
+    background-color: var(--dark-color);
+    border-bottom: 3px solid var(--accent-color);
+  }
+  
+  .navbar-brand {
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .navbar-nav .nav-link {
+    color: var(--primary-color);
+    font-weight: 500;
+  }
+  
+  .navbar-nav .nav-link:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+  }
+  
+  /* Footer Styling */
+  footer {
+    background-color: var(--dark-color);
+    color: var(--secondary-color);
+    padding: 10px 0;
+    text-align: center;
+  }
+  
+  /* Buttons */
+  .btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+  }
+  
+  /* Animations */
+  .animate-fade-in {
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
