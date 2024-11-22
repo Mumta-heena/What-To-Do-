@@ -1,32 +1,71 @@
 {% extends 'base.html' %} {% block content %}
 <div class="container py-5">
   <h1>Get Started</h1>
-  <a href="{% url 'task_create' %}" class="btn btn-success">Add Task</a>
+  <!-- Button to trigger form loading -->
+  <button id="load-task-form-btn" class="btn btn-success">Add Task</button>
+
+  <!-- Container where the form will be dynamically loaded -->
+  <div id="task-form-container"></div>
 </div>
 
-<!-- AJAX Script to Dynamically Update Task List -->
+<!-- Add jQuery for Ajax -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
-  // Function to load tasks dynamically into the task list container
-  function loadTaskList() {
-    $.ajax({
-      url: "{% url 'task_list' %}", // The URL where the task list is served
-      type: "GET",
-      success: function (response) {
-        // Update the task list content dynamically
-        $("#task-list-container").html(
-          $(response).find("#task-list-container").html()
-        );
-      },
-      error: function (xhr, status, error) {
-        console.log("Error loading tasks: " + error);
-      },
-    });
+  // Include CSRF Token in AJAX request
+  function getCSRFToken() {
+    let cookieValue = null;
+    if (document.cookie && document.cookie.indexOf("csrftoken") >= 0) {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith("csrftoken=")) {
+          cookieValue = decodeURIComponent(
+            cookie.substring("csrftoken=".length)
+          );
+          break;
+        }
+      }
+    }
+    return cookieValue;
   }
 
-  // Call this function on page load or after a task is added/removed
-  $(document).ready(function () {
-    loadTaskList();
+  // AJAX call for deleting the task
+  $("form.delete-task-form").submit(function (event) {
+    event.preventDefault(); // Prevent default form submission
+    const url = $(this).attr("action"); // Get the form action URL (delete URL)
+
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: $(this).serialize(), // Serialize form data
+      headers: {
+        "X-CSRFToken": getCSRFToken(), // Include CSRF token from cookies
+      },
+      success: function (response) {
+        // Handle success, for example, refresh the task list or show a success message
+        location.reload(); // Reload the page to reflect changes
+      },
+      error: function () {
+        alert("Error deleting task");
+      },
+    });
+  });
+
+  // Event listener for the button click
+  $("#load-task-form-btn").click(function () {
+    // Send AJAX request to fetch the form
+    $.ajax({
+      url: '{% url "load_task_form" %}', // The URL for loading the task form
+      type: "GET",
+      success: function (data) {
+        // Inject the form HTML into the #task-form-container
+        $("#task-form-container").html(data);
+      },
+      error: function () {
+        alert("Error loading form");
+      },
+    });
   });
 </script>
-
 {% endblock %}
