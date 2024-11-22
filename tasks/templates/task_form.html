@@ -1,8 +1,36 @@
 {% extends 'base.html' %} {% block content %}
-<h2>Create a New Task</h2>
-<form method="post">
-  {% csrf_token %} {{ form.as_p }}
+<div class="container py-5">
+  <h2>Create a New Task</h2>
+  <form id="task-form" method="post">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Save Task</button>
+  </form>
+</div>
 
-  <button type="submit" class="primary">Save Task</button>
-</form>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+    // Handle form submission via AJAX
+    $("#task-form").submit(function (event) {
+      event.preventDefault(); // Prevent normal form submission
+
+      $.ajax({
+        url: '{% url "task_create" %}', // Task create URL
+        type: "POST",
+        data: $(this).serialize(), // Serialize form data
+        success: function (response) {
+          if (response.status === "success") {
+            // Update the task list with the new tasks
+            $("#task-list-container").html(response.html); // Update the task list container
+          } else {
+            alert("Error: " + response.errors);
+          }
+        },
+        error: function () {
+          alert("Error adding task.");
+        },
+      });
+    });
+  });
+</script>
 {% endblock %}
