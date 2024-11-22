@@ -1,6 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
+    <!-- Brand Link -->
     <a class="navbar-brand" href="/">What To-Do?</a>
+
+    <!-- Navbar Toggler for Mobile -->
     <button
       class="navbar-toggler"
       type="button"
@@ -12,15 +15,28 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
+
+    <!-- Navbar Links -->
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
+        {% comment %}
+        <!-- Option Link -->
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'get_started' %}">Options</a>
+          <a class="nav-link" href="{% url 'get_started' %}">Get Started</a>
         </li>
+        {% endcomment %}
 
+        <!-- About Link -->
         <li class="nav-item">
           <a class="nav-link" href="{% url 'about' %}">About Me</a>
         </li>
+
+        {% comment %}
+        <!-- Contact Link (optional, if needed) -->
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+        </li> -->
+        {% endcomment %}
       </ul>
     </div>
   </div>

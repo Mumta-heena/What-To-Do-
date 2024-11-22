@@ -10,7 +10,11 @@ def welcome(request):
     except Exception as e:
         print(e)
         raise
-    
+
+def load_task_form(request):
+    form = TaskForm()  # Instantiate the form
+    return render(request, 'task_form.html', {'form': form}) 
+  
 def about(request):
     return render(request, 'about.html')
 
