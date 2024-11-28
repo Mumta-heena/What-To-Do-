@@ -28,16 +28,31 @@ def task_create(request):
         form = TaskForm()
     return render(request, 'task_form.html', {'form': form})
 
+def task_update_status(request, pk):
+    task = get_object_or_404(Tasks, pk=pk)
+    task.is_completed = not task.is_completed  # Toggle the completion status
+    task.save()
+    return redirect('task_list')  # Redirect back to the task list page
+
 def task_update(request, pk):
     task = get_object_or_404(Tasks, pk=pk)
     if request.method == 'POST':
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
-            return redirect('task_list')
+            return redirect('task_list')  # Redirect back to task list
     else:
         form = TaskForm(instance=task)
-    return render(request, 'task_form.html', {'form': form})
+
+    return render(
+        request,
+        'task_form.html',
+        {
+            'form': form,
+            'task': task,
+            'is_edit': True,  # Flag to indicate editing
+        },
+    )
 
 def task_delete(request, pk):
     task = get_object_or_404(Tasks, pk=pk)

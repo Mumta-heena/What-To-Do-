@@ -1,8 +1,11 @@
 {% extends 'base.html' %} {% block content %}
-<div class="text-center">
-  <h1>Get Started</h1>
-  <p>Choose an option below:</p>
-  <a href="{% url 'task_list' %}" class="btn btn-primary">View Tasks</a>
-  <a href="{% url 'task_create' %}" class="btn btn-success">Add Task</a>
+<div class="container text-center py-5">
+  <h1 class="text-teal mb-4">Choose an option below:</h1>
+  <a href="{% url 'task_list' %}" class="btn btn-teal btn-lg mt-4"
+    >View Tasks</a
+  >
+  <a href="{% url 'task_create' %}" class="btn btn-light btn-lg mt-4"
+    >Add Task</a
+  >
 </div>
 {% endblock %}
